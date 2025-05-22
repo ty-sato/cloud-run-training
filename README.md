@@ -30,8 +30,9 @@ $ docker images
 ## ビルドしたイメージからコンテナを立ち上げる
 
 ```bash
-$ docker run -p 8080:8080 -v $(pwd)/app:/app -e DEBUG=true ws-flask-app:local
+$ docker run -p 8081:8080 -v $(pwd)/app:/app -e DEBUG=true ws-flask-app:local
 ```
+http://0.0.0.0:8081
 
 ## Artifact Registry にイメージをアップ
 
@@ -50,13 +51,13 @@ asia-northeast1-docker.pkg.dev/xxxxxxxxxxx/repo-xxxxxx-xxxxxxxx/ws-flask-app:lat
 記入欄
 
 ```plain
-xxxxx/ws-flask-app:latest
+asia-northeast1-docker.pkg.dev/env95-cloudruntraining/repo-taiyo-sato/ws-flask-app:latest
 ```
 
 ### イメージのビルド
 
 ```bash
-$ docker build -t {イメージのパス} .
+$ docker build -t asia-northeast1-docker.pkg.dev/env95-cloudruntraining/repo-taiyo-sato/ws-flask-app:latest .
 ```
 
 例
@@ -80,7 +81,7 @@ $ docker push {イメージのパス}
 例
 
 ```bash
-$ docker push asia-northeast1-docker.pkg.dev/xxxxxxxxxxx/repo-xxxxxx-xxxxxxxx/ws-flask-app:latest .
+$ docker push asia-northeast1-docker.pkg.dev/env95-cloudruntraining/repo-taiyo-sato/ws-flask-app:latest
 ```
 
 記入欄
@@ -92,9 +93,9 @@ docker push xxxxx/ws-flask-app:latest
 ## Cloud Runにデプロイ
 
 ```bash
-$ gcloud run deploy {アプリ名} \
-    --image {イメージのパス} \
-    --region asia-northeast1
+$ gcloud run deploy cloud-run-taiyo-sato \
+    --image  asia-northeast1-docker.pkg.dev/env95-cloudruntraining/repo-taiyo-sato/ws-flask-app:latest \
+    --region asia-northeast1 \
     --port 8080
 ```
 
@@ -110,7 +111,7 @@ $ gcloud run deploy cloud-run-xxxxx \
 記入欄
 
 ```bash
-$ gcloud run deploy cloud-run-xxxxx \
+$ gcloud run deploy cloud-run-taiyo-sato
     --image xxxxxxx \
     --region asia-northeast1
     --port 8080
@@ -131,5 +132,5 @@ $ gcloud run services proxy cloud-run-xxxxxx --region asia-northeast1
 記入欄
 
 ```bash
-$ gcloud run services proxy xxxxxx --region asia-northeast1
+$ gcloud run services proxy cloud-run-taiyo-sato --region asia-northeast1 --port 8082
 ```
